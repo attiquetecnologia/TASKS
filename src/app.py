@@ -37,6 +37,8 @@ def create_app(test_config=None):
         return render_template("index.html")
     
     # blueprint
+    from projetos import view
+    app.register_blueprint(view.bp)
 
     return app
 
