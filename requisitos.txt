@@ -1,0 +1,31 @@
+O sistema precisa registar a quantidade de tempo trabalhada em uma determinada
+tarefa. Essa quantidade de tempo é incrementada para cada momento em que o 
+usuário trabalha nela.
+É importante ressaltar que cada tarefa pertence a um projeto.
+
+REQUISITO FUNCIONAL
+#RF0001
+Registrar o tempo gasto em cada tarefa. O individuo pode trabalhar mais de uma
+vez em uma tarefa não concluída.
+
+#RF0002
+Exibir lista de tarefas de um projeto e permitir iniciar cronometro dessa lista.
+
+#RF0003
+Permitir a Criação e Edição de uma tarefa e exibir o tempo trabalhado nessa
+tarefa no registro.
+
+#RF0004
+É preciso emitir um relatório do tempo gasto no projeto total.
+
+#RF0005
+Emitir relatório do tempo total gasto na tarefa
+
+REQUISITOS NÃO FUNCIONAIS
+#RNF0001
+#RF0001, #RF0002, quando o cronometro é iniciado para uma tarefa ele deve bloquear as outras,
+e exibir um botão de stop para a tarefa iniciada.
+#RNF0002
+Se a tarefa iniciada não terminar em 25 minutos é emitido um alerta na tela.
+#RNF0003
+#RF0003, É preciso calcular o tempo gasto na tarefa, e fazer um resumo geral.
