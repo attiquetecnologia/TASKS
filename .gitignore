@@ -3,3 +3,6 @@ __pycache__
 *.zip
 *.table
 *.log
+.venv/
+*.exe
+*.cfg
