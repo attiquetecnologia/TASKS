@@ -11,6 +11,7 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY='dev'
         ,SQLALCHEMY_DATABASE_URI="sqlite:///"+os.path.join("databases", "test.db")
+        ,SQLALCHEMY_TRACK_MODIFICATIONS=True
         ,ENV="production"
         ,DEBUG=True
     )
@@ -38,8 +39,9 @@ def create_app(test_config=None):
         return render_template("index.html")
     
     # blueprint
-    from projetos import view
+    from projetos import view, vw_tasks
     app.register_blueprint(view.bp)
+    app.register_blueprint(vw_tasks.bp)
 
     return app
 

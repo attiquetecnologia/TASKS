@@ -21,7 +21,7 @@ class Task(db.Model):
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'),
         nullable=False)
 
-    times = db.relationship('TaskTime', backref='tasks', lazy=True)
+    times = db.relationship('TaskTime', backref='task', lazy=True)
     
     def __repr__(self):
         return f'''<Task {self.task_name} - Project {self.project_name}>'''

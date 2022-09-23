@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+
 {% block content %}
   <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -16,18 +17,16 @@
     </div>
 
     <h2>Sistema de Tarefas</h2>
-    <div class="list-group">
-      <div class="list-group-item list-group-item-action ative">
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">Tarefa 1</h5>
-          <small>Iniciado em: <strong>22-09-22 19:00</strong></small>
-        </div>
-        <p>Projeto B</p>
-        <p>Lorem ipsum...</p>
-        <p class="bg-warning">Urgente | Importante</p>
-        <p><a class="btn btn-primary" href="#">Ver</a> <a href="#" class="btn btn-success">START</a> <a href="#" class="btn btn-danger">STOP</a> </p>
-      </div>
-    </div>
-
+    <div id="tasks-list"></div>
   </main>
+  {% endblock %}
+
+  {% block page_js %}
+  <script>
+    $(document).ready(function(){
+      $.get("{{ url_for("task.lista") }}", function(data){
+        document.querySelector("#tasks-list").innerHTML = data;
+      })
+    });
+  </script>
   {% endblock %}
