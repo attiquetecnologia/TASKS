@@ -3,9 +3,9 @@
     <div class="list-group-item list-group-item-action ative">
       <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1">{{ l.task_name }}</h5>
-        <small>Iniciado em: <strong>{{ l.project_id.start_date.strftime("%d-%m-%Y %H:%M") }}</strong></small>
+        <small>Iniciado em: <strong>{{ l.project.start_date.strftime("%d-%m-%Y %H:%M") }}</strong></small> <!-- .start_date.strftime("%d-%m-%Y %H:%M") -->
       </div>
-      <p>{{ l.project_name }}</p>
+      <h3>{{ l.project.project_name }}</h3>
       <p class="bg-warning">{{ l.status }} Urgente | Importante</p>
       <p><a class="btn btn-primary" href="#">Ver</a> <a href="#" class="btn btn-success">START</a> <a href="#" class="btn btn-danger">STOP</a> </p>
     </div>

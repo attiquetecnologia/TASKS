@@ -2,6 +2,8 @@ import os
 from flask import (Flask, render_template)
 from flask_sqlalchemy import SQLAlchemy
 
+from projetos import vw_time
+
 
 db = SQLAlchemy()
 
@@ -39,9 +41,10 @@ def create_app(test_config=None):
         return render_template("index.html")
     
     # blueprint
-    from projetos import view, vw_tasks
+    from projetos import view, vw_tasks, vw_time
     app.register_blueprint(view.bp)
     app.register_blueprint(vw_tasks.bp)
+    app.register_blueprint(vw_time.bp)
 
     return app
 

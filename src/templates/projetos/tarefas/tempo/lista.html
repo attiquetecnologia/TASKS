@@ -1,0 +1,13 @@
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
+        <tr>
+            <th>Inicio</th><th>Fim</th>
+        </tr>
+        {% for t in tasks: %}
+        <tr>
+            <th>{{ t.start_time.strftime("%d-%m-%Y") if t.start_time else "" }}</th>
+            <th>{{ t.end_time.strftime("%d-%m-%Y") if t.end_time else ""  }}</th>
+        </tr>
+        {% endfor %}        
+    </table>
+</div>

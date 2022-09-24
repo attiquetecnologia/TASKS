@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
       <h1 class="h2">Dashboard</h1>
       <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="{{ url_for("task.add") }}" class="btn btn-sm btn-primary">Add Task</a>
+        <a href="#" class="btn btn-sm btn-primary">Add</a>
         <div class="btn-group me-2">
           <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
           <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
@@ -17,16 +17,36 @@
       </div>
     </div>
 
-    <h2>Sistema de Tarefas</h2>
-    <div id="tasks-list"></div>
+    <h2>Cadastro de Tarefas</h2>
+
+    <form method="post" enctype="multipart/form-data">
+    
+        <div class="input-form">
+            <label>Nome da Tarefa</label>
+            <input type="text" name="task_name" required class="form-control" />
+        </div>
+
+        <div class="input-form">
+            <label>Nome do Projeto</label>
+            <select name="project_id" required class="form-control">
+                <option value="">Escolha um projeto</option>
+                {% for p in projects %}
+                <option value="{{ p.id }}">{{ p.project_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+    </form>
+
+    <div id="times-list"></div>
   </main>
   {% endblock %}
 
   {% block page_js %}
   <script>
     $(document).ready(function(){
-      $.get("{{ url_for("task.lista") }}", function(data){
-        document.querySelector("#tasks-list").innerHTML = data;
+      $.get("{{ url_for("time.lista") }}", function(data){
+        document.querySelector("#times-list").innerHTML = data;
       })
     });
   </script>
