@@ -15,9 +15,11 @@ class Project(db.Model):
         return f'''<Project {self.project_name}>'''
 
 class Task(db.Model):
+    task_status = {1:"Urgente|Importante", 2: "Urgente|Não Importante", 3:"Não Urgene|Importante" }
     id = db.Column(db.Integer, primary_key=True)
     task_name = db.Column(db.String(80), nullable=False)
     status = db.Column(db.Integer, nullable=False)
+    concluido = db.Column(db.Boolean)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'),
         nullable=False)
 

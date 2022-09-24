@@ -2,9 +2,6 @@ import os
 from flask import (Flask, render_template)
 from flask_sqlalchemy import SQLAlchemy
 
-from projetos import vw_time
-
-
 db = SQLAlchemy()
 
 def create_app(test_config=None):
