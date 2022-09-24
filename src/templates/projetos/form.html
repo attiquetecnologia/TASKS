@@ -1,0 +1,111 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="h2">Cadastro de Projeto</h1>
+      <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{{ url_for("project.add") }}" class="btn btn-sm btn-primary">Add</a>
+        <div class="btn-group me-2">
+          <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+          <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+        </div>
+        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+          <span data-feather="calendar" class="align-text-bottom"></span>
+          This week
+        </button>
+      </div>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+        <div id="messages"></div>
+
+        {% if record %}
+        <div class="mb-3">
+            <label>ID</label>
+            <input type="text" name="id" value="{{ record.id }}" required readonly class="form-control" />
+        </div>
+        {% endif %}
+
+        <div class="mb-3">
+            <label>Nome do Projeto</label>
+            <input type="text" name="project_name" required class="form-control" 
+              value="{{ record.project_name if record else "" }}" />
+        </div>
+
+        <div class="mb-3">
+            <label>Gestor</label>
+            <input type="text" name="manager" required class="form-control" 
+              value="{{ record.manager if record else "" }}" />
+        </div>
+
+        <div class="mb-3">
+            <label>Email do gestor</label>
+            <input type="email" name="manager_email" required class="form-control" 
+              value="{{ record.manager_email if record else "" }}" />
+        </div>
+
+        <div class="mb-3">
+            <label>Data de Inicio</label>
+            <input type="datetime-local" name="start_date" required class="form-control" 
+              value="{{ record.start_date if record else "" }}" />
+        </div>
+
+        <div class="mb-3">
+            <label>Data de Fim</label>
+            <input type="datetime-local" name="end_date" required class="form-control" 
+              value="{{ record.end_date if record else "" }}" />
+        </div>
+
+        <div class="mb-3">
+            <label>Status da Tarefa</label>
+            <select name="status" required class="form-control">
+                <option value="">Escolha um</option>
+                {% for k,v in {1:"Iniciado", 2: "Parado", 3:"Pausado", 4:"Concluído" }.items() %}
+                <option value="{{ k }}" {{ "selected=''" if record and record.status==k else "" }}>{{ v }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+    </form>
+    <hr>
+    <h3>Tarefas</h3>
+    <div id="tasks-list">
+        {% if record %}
+        <table class="table table-hover table-stripe">
+            <tr>
+                <th>#</th><th>Nome</th><th>Status</th><th></th>
+            </tr>
+            {% for t in record.tasks %}
+            <tr>
+                <td>{{ t.id }}</td><td>{{ t.task_name }}</td><td>{{ t.status }}</td>
+                <td><a href="#" class="text-success">Edit</a> | <a href="#" class="text-danger">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </div>
+  </main>
+  {% endblock %}
+
+  {% block page_js %}
+  <script>
+    $(document).ready(function(){
+        {% if record and False %}
+      $.get("{{ url_for("task.lista") }}", function(data){
+        document.querySelector("#tasks-list").innerHTML = data;
+      });
+      {% endif %}
+
+      $("form").submit(function(e){
+        e.preventDefault();
+        $.post("{{ url_for("task.form") }}", $(this).serialize(), function(data){
+            document.querySelector("#messages").innerHTML = data;
+        });
+      });
+
+    });
+  </script>
+  {% endblock %}
