@@ -17,17 +17,19 @@
       </div>
     </div>
     <form method="post" enctype="multipart/form-data">
-        <div class="alert alert-info" id="messages"></div>
-        {% if task %}
+        <div id="messages"></div>
+
+        {% if record %}
         <div class="mb-3">
             <label>ID</label>
-            <input type="text" name="id" value="{{ task.id }}" required readonly class="form-control" />
+            <input type="text" name="id" value="{{ record.id }}" required readonly class="form-control" />
         </div>
         {% endif %}
 
         <div class="mb-3">
             <label>Nome da Tarefa</label>
-            <input type="text" name="task_name" required class="form-control" />
+            <input type="text" name="task_name" required class="form-control" 
+              value="{{ record.task_name if record else "" }}" />
         </div>
 
         <div class="mb-3">
@@ -35,7 +37,7 @@
             <select name="project_id" required class="form-control">
                 <option value="">Escolha um projeto</option>
                 {% for p in projects %}
-                <option value="{{ p.id }}">{{ p.project_name }}</option>
+                <option value="{{ p.id }}" {{ "selected=''" if record and record.project_id==p.id else "" }}>{{ p.project_name }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -45,14 +47,14 @@
             <select name="status" required class="form-control">
                 <option value="">Escolha um</option>
                 {% for k,v in {1:"Urgente|Importante", 2: "Urgente|Não Importante", 3:"Não Urgene|Importante" }.items() %}
-                <option value="{{ k }}">{{ v }}</option>
+                <option value="{{ k }}" {{ "selected=''" if record and record.status==k else "" }}>{{ v }}</option>
                 {% endfor %}
             </select>
         </div>
 
         <div class="mb-3">
             <label>
-                <input type="checkbox" name="concluido" />
+                <input type="checkbox" name="concluido" {{ "checked=''" if record and record.concluido==True else "" }}/>
                 Concluído?</label>
         </div>
 

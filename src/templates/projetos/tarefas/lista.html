@@ -7,7 +7,7 @@
       </div>
       <h3>{{ l.project.project_name }}</h3>
       <p class="bg-warning">{{ l.status }} Urgente | Importante</p>
-      <p><a class="btn btn-primary" href="#">Ver</a> <a href="#" class="btn btn-success">START</a> <a href="#" class="btn btn-danger">STOP</a> </p>
+      <p><a class="btn btn-primary" href="{{ url_for("task.edit", id=l.id)}}">Ver</a> <a href="#" class="btn btn-success">START</a> <a href="#" class="btn btn-danger">STOP</a> </p>
     </div>
     {% endfor %}
 </div>
