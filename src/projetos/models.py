@@ -16,10 +16,11 @@ class Project(db.Model):
         return f'''<Project {self.project_name}>'''
 
 class Task(db.Model):
-    task_status = {1:"Urgente|Importante", 2: "Urgente|Não Importante", 3:"Não Urgene|Importante" }
+    nivel_task_colors = {1:"bg-success", 2:"bg-warning", 3: "#ff7c00", 4: "bg-danger" }
+    nivel_task = { 1:"Não Urgene/Importante", 2:"Urgente/Importante", 3: "Urgente/Não Importante", 4: "Não Urgente/Não Importante" }
     id = db.Column(db.Integer, primary_key=True)
     task_name = db.Column(db.String(80), nullable=False)
-    status = db.Column(db.Integer, nullable=False)
+    nivel = db.Column(db.Integer, nullable=False)
     concluido = db.Column(db.Boolean)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'),
         nullable=False)
@@ -38,4 +39,4 @@ class TaskTime(db.Model):
         nullable=False)
     
     def __repr__(self):
-        return f'''<{self.start_time} - {self.end_time} - Task {self.task_name} - Project {self.project_name}>'''
+        return f'''<{self.start_time} - {self.end_time} - Task {self.task_id} - Project >'''

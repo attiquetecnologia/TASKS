@@ -10,6 +10,10 @@ body {
 /*
  * Sidebar
  */
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}
 
 .sidebar {
   position: fixed;

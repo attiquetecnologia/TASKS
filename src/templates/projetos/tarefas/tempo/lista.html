@@ -3,10 +3,10 @@
         <tr>
             <th>Inicio</th><th>Fim</th>
         </tr>
-        {% for t in tasks: %}
+        {% for l in lista: %}
         <tr>
-            <th>{{ t.start_time.strftime("%d-%m-%Y") if t.start_time else "" }}</th>
-            <th>{{ t.end_time.strftime("%d-%m-%Y") if t.end_time else ""  }}</th>
+            <td>{{ l.start_time.strftime("%d-%m-%Y") if l.start_time else "" }}</td>
+            <td>{{ l.end_time.strftime("%d-%m-%Y") if l.end_time else ""  }}</td>
         </tr>
         {% endfor %}        
     </table>

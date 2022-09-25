@@ -80,7 +80,7 @@
             </tr>
             {% for t in record.tasks %}
             <tr>
-                <td>{{ t.id }}</td><td>{{ t.task_name }}</td><td>{{ t.status }}</td>
+                <td>{{ t.id }}</td><td>{{ t.task_name }}</td><td>{{ t.nivel_task(t.nivel) }}</td>
                 <td><a href="#" class="text-success">Edit</a> | <a href="#" class="text-danger">Delete</a></td>
             </tr>
             {% endfor %}

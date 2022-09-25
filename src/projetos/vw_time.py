@@ -1,3 +1,4 @@
+from datetime import datetime
 from urllib import request
 from flask import (url_for, session, Blueprint, render_template)
 from sqlalchemy.orm import joinedload
@@ -13,10 +14,42 @@ def form():
     
     return f"""Mensagem"""
 
-@bp.route("/times/lista", methods=("GET", ))
-def lista():
+@bp.route("/times/lista/<int:task_id>", methods=("GET", ))
+def lista(task_id=None):
     query = TaskTime.query.options(joinedload('time'))
-    lista = TaskTime.query.all()
+    if task_id:
+        lista = TaskTime.query.filter_by(task_id=task_id).all()
+    else:
+        lista = TaskTime.query.all()
     return render_template("projetos/tarefas/tempo/lista.html"
     , lista=lista
     )
+
+@bp.route("/times/start/<int:task_id>", methods=("GET", ))
+def start(task_id):
+    from app import db
+    try:
+        open_time = TaskTime.query.filter_by(end_time=None).first()
+        if open_time:
+            return f"""Tarefa {open_time.task} ({open_time.task_id}) está iniciada! Finalize-a primeiro!"""
+
+        time = TaskTime(start_time=datetime.now(), task_id=task_id)
+        db.session.add(time)
+        db.session.commit()
+        return f"""Tarefa {task_id} iniciada"""
+    except Exception as ex:
+        return f"""Problemas ao iniciar a tarefa {task_id} -> {ex}"""
+
+@bp.route("/times/stop/<int:task_id>/<int:id>", methods=("GET", ))
+def stop(task_id, id=None):
+    from app import db
+    try:
+        time = TaskTime.query.filter_by(id=id,task_id=task_id, end_time=None).first()
+        time.end_time=datetime.now()
+        time.task_id=task_id
+
+        db.session.add(time)
+        db.session.commit()
+        return f"""Tarefa {task_id} finalizada"""
+    except Exception as ex:
+        return f"""Problemas ao iniciar a tarefa {task_id} -> {ex}"""        

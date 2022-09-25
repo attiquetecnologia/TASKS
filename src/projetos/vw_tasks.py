@@ -1,6 +1,6 @@
 from flask import (url_for, session, Blueprint, render_template, request)
 from sqlalchemy.orm import joinedload
-from . models import Project, Task
+from . models import Project, Task, TaskTime
 from app import db
 bp = Blueprint('task', __name__)
 
@@ -25,13 +25,13 @@ def form():
             # task = Task(**data)
             record.task_name = request.form.get("task_name")
             record.project_id = request.form.get("project_id")
-            record.status = request.form.get("status")
+            record.nivel = request.form.get("nivel")
             record.concluido = request.form.get("concluido")=="on" or False
         else:
             task = Task(**{
                 "task_name": request.form.get("task_name")
                 ,"project_id": request.form.get("project_id")
-                ,"status": request.form.get("status")
+                ,"nivel": request.form.get("nivel")
                 ,"concluido": request.form.get("concluido")=="on" or False
                 })
             db.session.add(task)
@@ -42,8 +42,9 @@ def form():
 
 @bp.route("/tasks/lista", methods=("GET", ))
 def lista():
+    open_task = TaskTime.query.filter_by(end_time=None).first()
     query = Task.query.options(joinedload('project'))
     lista = Task.query.all()
     return render_template("projetos/tarefas/lista.html"
-    , lista=lista
+    , lista=lista, open_task=open_task
     )

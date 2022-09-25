@@ -71,9 +71,11 @@
   {% block page_js %}
   <script>
     $(document).ready(function(){
-      $.get("{{ url_for("time.lista") }}", function(data){
+      {% if record %}
+      $.get("{{ url_for("time.lista", task_id=record.id) }}", function(data){
         document.querySelector("#times-list").innerHTML = data;
       });
+      {% endif%}
 
       $("form").submit(function(e){
         e.preventDefault();

@@ -27,7 +27,12 @@
     $(document).ready(function(){
       $.get("{{ url_for("task.lista") }}", function(data){
         document.querySelector("#tasks-list").innerHTML = data;
-      })
+      });      
     });
+
+    $(".btn-start").on("click", function(event){
+        alert(event);
+    });
+
   </script>
   {% endblock %}

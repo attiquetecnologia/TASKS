@@ -6,8 +6,10 @@
         <small>Iniciado em: <strong>{{ l.project.start_date.strftime("%d-%m-%Y %H:%M") }}</strong></small> <!-- .start_date.strftime("%d-%m-%Y %H:%M") -->
       </div>
       <h3>{{ l.project.project_name }}</h3>
-      <p class="bg-warning">{{ l.status }} Urgente | Importante</p>
-      <p><a class="btn btn-primary" href="{{ url_for("task.edit", id=l.id)}}">Ver</a> <a href="#" class="btn btn-success">START</a> <a href="#" class="btn btn-danger">STOP</a> </p>
+      <p class="{{ l.nivel_task_colors.get(l.nivel) }}" style="background-color: {{l.nivel_task_colors.get(l.nivel)}} ; color: #ffffff;">{{ l.nivel_task.get(l.nivel) }}</p>
+      <p><a class="btn btn-primary" href="{{ url_for("task.edit", id=l.id)}}">Ver</a> 
+        <a href="{{ url_for("time.start", task_id=l.id) }}" class="btn btn-success btn-start {{"disabled" if open_task else ""}}">START</a> 
+        <a href="{{ url_for("time.stop", task_id=l.id, id=open_task.id if open_task else 0) }}" class="btn btn-danger btn-stop {{"disabled" if not open_task or open_task.task_id!=l.id else ""}}" >STOP</a> </p>
     </div>
     {% endfor %}
 </div>
