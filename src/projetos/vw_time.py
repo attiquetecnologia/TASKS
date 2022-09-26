@@ -2,7 +2,7 @@ from datetime import datetime
 from urllib import request
 from flask import (url_for, session, Blueprint, render_template)
 from sqlalchemy.orm import joinedload
-from . models import Project, TaskTime
+from . models import Task, TaskTime
 bp = Blueprint('time', __name__)
 
 
@@ -29,9 +29,11 @@ def lista(task_id=None):
 def start(task_id):
     from app import db
     try:
+        task = Task.query.filter_by(id=task_id, concluido=True).first()
+        if task: return f"""Tarefa {task.task_name} ({task.id}) já concluída!"""
+
         open_time = TaskTime.query.filter_by(end_time=None).first()
-        if open_time:
-            return f"""Tarefa {open_time.task} ({open_time.task_id}) está iniciada! Finalize-a primeiro!"""
+        if open_time: return f"""Tarefa {open_time.task} ({open_time.task_id}) está iniciada! Finalize-a primeiro!"""
 
         time = TaskTime(start_time=datetime.now(), task_id=task_id)
         db.session.add(time)
@@ -53,3 +55,19 @@ def stop(task_id, id=None):
         return f"""Tarefa {task_id} finalizada"""
     except Exception as ex:
         return f"""Problemas ao iniciar a tarefa {task_id} -> {ex}"""        
+
+@bp.route("/times/restart/<int:task_id>", methods=("GET", ))
+def restart(task_id):
+    from app import db
+    try:
+        task = Task.query.filter_by(id=task_id, concluido=True).first()
+        if not task: 
+            return f"""Tarefa {task.task_name} ({task.id}) ainda está aberta!"""
+        else:
+            task.concluido=False
+
+        db.session.add(task)
+        db.session.commit()
+        return f"""Tarefa {task_id} reiniciada"""
+    except Exception as ex:
+        return f"""Problemas ao reiniciar a tarefa {task_id} -> {ex}"""

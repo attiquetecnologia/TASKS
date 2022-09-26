@@ -2,14 +2,21 @@
     {% for l in lista %}
     <div class="list-group-item list-group-item-action ative">
       <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">{{ l.task_name }}</h5>
+        <h5 class="mb-1">{{ l.task_name }} {{ "(CONCLUÍDO)" if l.concluido else "" }}</h5>
         <small>Iniciado em: <strong>{{ l.project.start_date.strftime("%d-%m-%Y %H:%M") }}</strong></small> <!-- .start_date.strftime("%d-%m-%Y %H:%M") -->
+        
       </div>
       <h3>{{ l.project.project_name }}</h3>
-      <p class="{{ l.nivel_task_colors.get(l.nivel) }}" style="background-color: {{l.nivel_task_colors.get(l.nivel)}} ; color: #ffffff;">{{ l.nivel_task.get(l.nivel) }}</p>
-      <p><a class="btn btn-primary" href="{{ url_for("task.edit", id=l.id)}}">Ver</a> 
+      <p><span class="{{ l.nivel_task_colors.get(l.nivel) }}" style="padding: 5px; border-radius: 4px; background-color: {{l.nivel_task_colors.get(l.nivel)}} ; color: #ffffff;">{{ l.nivel_task.get(l.nivel) }}</span></p>
+      <p>
+        <a class="btn btn-primary" href="{{ url_for("task.edit", id=l.id)}}">Ver</a>
+      {% if l.concluido %}
+        <a href="{{ url_for("time.restart", task_id=l.id) }}" class="btn btn-success btn-warning {{"disabled" if open_task else ""}}">RESTART</a> 
+      {%else%} 
         <a href="{{ url_for("time.start", task_id=l.id) }}" class="btn btn-success btn-start {{"disabled" if open_task else ""}}">START</a> 
-        <a href="{{ url_for("time.stop", task_id=l.id, id=open_task.id if open_task else 0) }}" class="btn btn-danger btn-stop {{"disabled" if not open_task or open_task.task_id!=l.id else ""}}" >STOP</a> </p>
+        <a href="{{ url_for("time.stop", task_id=l.id, id=open_task.id if open_task else 0) }}" class="btn btn-danger btn-stop {{"disabled" if not open_task or open_task.task_id!=l.id else ""}}" >STOP</a> 
+      </p>
+      {%endif%}
     </div>
     {% endfor %}
 </div>
