@@ -1,6 +1,7 @@
 from app import db
 
 class Project(db.Model):
+    project_status_colors = {1:"bg-success", 3:"bg-warning", 4: "#ff7c00", 2: "bg-danger" }
     project_status = {1:"Iniciado", 2: "Parado", 3:"Pausado", 4:"Concluído" }
     id = db.Column(db.Integer, primary_key=True)
     project_name = db.Column(db.String(80), nullable=False)

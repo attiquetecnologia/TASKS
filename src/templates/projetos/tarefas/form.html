@@ -7,7 +7,7 @@
       <div class="btn-toolbar mb-2 mb-md-0">
         <a href="{{ url_for("task.add") }}" class="btn btn-sm btn-primary">Add</a>
         <div class="btn-group me-2">
-          <a href="{{ url_for("index") }}" class="btn btn-sm btn-outline-secondary">Voltar</a>
+          <a href="{{ url_for("task.index") }}" class="btn btn-sm btn-outline-secondary">Voltar</a>
         </div>
       </div>
     </div>
@@ -58,17 +58,18 @@
         </div>
     </form>
     <hr>
-
+    {% if record %}
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
       <h3>Times</h3>
       <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="{{ url_for("time.start", task_id=record.id) }}" {{"disabled" if open_task else ""}}" class="btn btn-sm btn-success">Start</a>
+        <a href="{{ url_for("time.start", task_id=record.id if record else 0) }}" {{"disabled" if open_task else ""}}" class="btn btn-sm btn-success">Start</a>
         <div class="btn-group me-2">
           <a href="{{ url_for("index") }}" class="btn btn-sm btn-outline-secondary">Reload</a>
         </div>
       </div>
     </div>
     <div id="times-list"></div>
+    {% endif %}
   </main>
   {% endblock %}
 

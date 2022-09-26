@@ -3,9 +3,9 @@
 {% block content %}
   <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-      <h1 class="h2">Dashboard</h1>
+      <h1 class="h2">Lista de Projetos</h1>
       <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="{{ url_for("task.add") }}" class="btn btn-sm btn-primary">Add Task</a>
+        <a href="{{ url_for("task.add") }}" class="btn btn-sm btn-primary">Add</a>
         <div class="btn-group me-2">
           <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
           <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
@@ -17,16 +17,15 @@
       </div>
     </div>
 
-    <h2>Lista de Tarefas</h2>
-    <div id="tasks-list"></div>
+    <div id="projects-list"></div>
   </main>
   {% endblock %}
 
   {% block page_js %}
   <script>
     $(document).ready(function(){
-      $.get("{{ url_for("task.lista") }}", function(data){
-        document.querySelector("#tasks-list").innerHTML = data;
+      $.get("{{ url_for("project.lista") }}", function(data){
+        document.querySelector("#projects-list").innerHTML = data;
       });      
     });
 

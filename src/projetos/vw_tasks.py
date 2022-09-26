@@ -2,7 +2,16 @@ from flask import (url_for, session, Blueprint, render_template, request)
 from sqlalchemy.orm import joinedload
 from . models import Project, Task, TaskTime
 from app import db
+
+from datetime import datetime, timedelta
+
 bp = Blueprint('task', __name__)
+
+@bp.route("/task", methods=("GET", ))
+def index():
+    
+    return render_template("projetos/tarefas/index.html")
+
 
 @bp.route("/tasks/add", methods=("GET", ))
 def add():
@@ -45,6 +54,16 @@ def lista():
     open_task = TaskTime.query.filter_by(end_time=None).first()
     query = Task.query.options(joinedload('project'))
     lista = Task.query.all()
+    
+    def calc_time(line):
+        tempo = timedelta(days=0, seconds=0, microseconds=0)
+        for l in line.times:
+            tempo = tempo+(l.end_time-l.start_time)
+        return tempo
+
+    for l in lista:
+        lista[lista.index(l)].total = calc_time(l)
+
     return render_template("projetos/tarefas/lista.html"
     , lista=lista, open_task=open_task
     )

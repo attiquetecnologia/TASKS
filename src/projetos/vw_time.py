@@ -71,3 +71,15 @@ def restart(task_id):
         return f"""Tarefa {task_id} reiniciada"""
     except Exception as ex:
         return f"""Problemas ao reiniciar a tarefa {task_id} -> {ex}"""
+
+@bp.route("/times/delete/<int:id>", methods=("GET", ))
+def delete(id):
+    from app import db
+    try:
+        time = TaskTime.query.filter_by(id=id).first()
+        
+        db.session.delete(time)
+        db.session.commit()
+        return f"""Time from task deleted"""
+    except Exception as ex:
+        return f"""Problemas ao deletar -> {ex}"""                

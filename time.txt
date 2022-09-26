@@ -19,3 +19,5 @@
 14:57 24/09/2022	15:22 24/09/2022	Form Projeto
 16:18 25/09/2022	17:31 25/09/2022	botão start
 17:51 25/09/2022	19:09 25/09/2022	Muita coisa, start stop, valições
+11:09 26/09/2022	11:52 26/09/2022	Restart, perfumarias
+13:57 26/09/2022	15:02 26/09/2022	Lista tarefas, delete time

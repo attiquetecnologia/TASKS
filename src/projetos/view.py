@@ -1,13 +1,12 @@
 from flask import (url_for, session, Blueprint, render_template, request)
 from . models import Project
+from datetime import datetime, timedelta
+
 bp = Blueprint('project', __name__)
 
 @bp.route("/projects", methods=("GET", ))
 def index():
-    # return render_template("lista.html"
-    # , lista=lista
-    # )
-    return "Projetos"
+    return render_template("projetos/index.html")
 
 @bp.route("/projects/add", methods=("GET", ))
 def add():
@@ -53,6 +52,14 @@ def form():
 @bp.route("/projects/lista", methods=("GET", ))
 def lista():
     lista = Project.query.all()
-    return render_template("lista.html"
-    , lista=lista
-    )
+    def calc_time(tasks):
+        tempo = timedelta(days=0, seconds=0, microseconds=0)
+        for t in tasks:
+            for l in t.times:
+                tempo = tempo+(l.end_time-l.start_time)
+        return tempo
+
+    for l in lista:
+        lista[lista.index(l)].total = calc_time(l.tasks)
+
+    return render_template("projetos/lista.html", lista=lista)

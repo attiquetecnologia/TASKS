@@ -1,0 +1,19 @@
+<div class="list-group">
+  {% for l in lista %}
+  <div class="list-group-item list-group-item-action ative">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">{{ l.project_name }} <span class="{{ l.project_status_colors.get(l.status) }}" style="padding: 1px 4px 1px 4px; border-radius: 4px; background-color: {{l.project_status_colors.get(l.status)}} ; color: #ffffff;">{{ l.project_status.get(l.status) }}</span></h5>
+      <small>Iniciado em: <strong>{{ l.start_date.strftime("%d-%m-%Y %H:%M") }}</strong></small> <!-- .start_date.strftime("%d-%m-%Y %H:%M") -->
+    </div>
+    
+    <div class="d-flex w-100 justify-content-between">
+      
+      <p>Total: <strong>{{ l.total }}</strong></p>
+      <p>
+        <a class="btn btn-primary" href="{{ url_for("task.edit", id=l.id)}}">Ver</a>
+      
+    </div>
+    
+  </div>
+  {% endfor %}
+</div>

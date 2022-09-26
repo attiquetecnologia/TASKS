@@ -5,9 +5,12 @@
         </tr>
         {% for l in lista: %}
         <tr>
-            <td>{{ l.start_time.strftime("%d-%m-%Y") if l.start_time else "" }}</td>
-            <td>{{ l.end_time.strftime("%d-%m-%Y") if l.end_time else ""  }}</td>
-            <td><a href="{{ url_for("time.stop", task_id=l.task_id, id=l.id) }}" class="btn btn-danger btn-small btn-stop {{"disabled" if not open_task or open_task.task_id!=l.id else ""}}" >STOP</a> </td>
+            <td>{{ l.start_time.strftime("%d-%m-%Y %H:%M:%S") if l.start_time else "" }}</td>
+            <td>{{ l.end_time.strftime("%d-%m-%Y %H:%M:%S") if l.end_time else ""  }}</td>
+            <td>
+                <a href="{{ url_for("time.stop", task_id=l.task_id, id=l.id) }}" class="btn btn-danger btn-small btn-stop {{"disabled" if not open_task or open_task.task_id!=l.id else ""}}" >STOP</a> 
+                <a href="{{ url_for("time.delete", id=l.id) }}">Delete</a>
+            </td>
         </tr>
         {% endfor %}        
     </table>
