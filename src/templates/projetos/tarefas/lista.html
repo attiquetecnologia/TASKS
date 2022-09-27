@@ -2,11 +2,11 @@
     {% for l in lista %}
     <div class="list-group-item list-group-item-action ative">
       <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">{{ l.task_name }} {{ "(CONCLUÍDO)" if l.concluido else "" }}</h5>
+        <h3 class="mb-1">{{ l.task_name }} {{ "(CONCLUÍDO)" if l.concluido else "" }}</h3>
         <small>Iniciado em: <strong>{{ l.project.start_date.strftime("%d-%m-%Y %H:%M") }}</strong></small> <!-- .start_date.strftime("%d-%m-%Y %H:%M") -->
       </div>
       <div class="d-flex w-100 justify-content-between">
-        <h3>{{ l.project.project_name }}</h3>
+        <h5>{{ l.project.project_name }}</h5>
         <p><span class="{{ l.nivel_task_colors.get(l.nivel) }}" style="padding: 5px; border-radius: 4px; background-color: {{l.nivel_task_colors.get(l.nivel)}} ; color: #ffffff;">{{ l.nivel_task.get(l.nivel) }}</span></p>
       </div>
       <div class="d-flex w-100 justify-content-between">

@@ -39,10 +39,10 @@
 
         <div class="mb-3">
             <label>Status da Tarefa</label>
-            <select name="status" required class="form-control">
+            <select name="nivel" required class="form-control">
                 <option value="">Escolha um</option>
                 {% for k,v in {1:"Urgente|Importante", 2: "Urgente|Não Importante", 3:"Não Urgene|Importante" }.items() %}
-                <option value="{{ k }}" {{ "selected=''" if record and record.status==k else "" }}>{{ v }}</option>
+                <option value="{{ k }}" {{ "selected=''" if record and record.nivel==k else "" }}>{{ v }}</option>
                 {% endfor %}
             </select>
         </div>

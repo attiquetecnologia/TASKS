@@ -38,10 +38,11 @@ def create_app(test_config=None):
         return render_template("index.html")
     
     # blueprint
-    from projetos import view, vw_tasks, vw_time
+    from projetos import view, vw_tasks, vw_time, vw_report
     app.register_blueprint(view.bp)
     app.register_blueprint(vw_tasks.bp)
     app.register_blueprint(vw_time.bp)
+    app.register_blueprint(vw_report.bp)
 
     return app
 

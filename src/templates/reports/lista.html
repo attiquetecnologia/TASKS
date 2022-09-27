@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <br><br>
+<table class="table table-hover table-striped">
+    {% for p in lista %}
+    <tr>
+        <th colspan="2" style="text-align: center;">{{ p.project_name }}</th>
+    </tr>
+    <tr>
+        <td><strong>Inicio:</strong> {{ p.start_date }}</td><td><strong>Fim:</strong> {{ p.end_date }}</td>
+    </tr>
+    <tr>
+        <td><strong>Tarefas:</strong> {{ p.tasks|length }}</td><td><strong>Média Por tarefa:</strong> {{ p.media }}</td>
+    </tr>
+    <tr>
+        <td><strong>Tempo gasto:</strong> {{ p.total }}</td><td><strong>Média Por tarefa:</strong> {{ p.media }}</td>
+    </tr>
+    <tr>
+        <th colspan="2" style="text-transform: uppercase; text-align: center;">Detalhes das Tarefas</th>
+    </tr>
+    <tr>
+        <th>Tarefa</th><th>Tempo</th>
+    </tr>
+    {% for t in p.tasks %}
+    <tr>
+        <td>{{ t.task_name }}</td><td>{{ t.total }}</td>
+    </tr>
+    {% endfor %}{# fim for t in p.tasks #}
+
+    {% endfor %}{# fim for p in lista #}
+</table>
+</main>
+{% endblock %}
