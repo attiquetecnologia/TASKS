@@ -92,6 +92,14 @@
 
   {% block page_js %}
   <script>
+document.addEventListener("DOMContentLoaded", ()=>{
+  document.querySelector("form").onsubmit(e){
+    e.preventDefault();
+      $.post("{{ url_for("task.form") }}", $(this).serialize(), function(data){
+          document.querySelector("#messages").innerHTML = data;
+      });
+  };
+});
     $(document).ready(function(){
         {% if record and False %}
       $.get("{{ url_for("task.lista") }}", function(data){
