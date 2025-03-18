@@ -1,4 +1,6 @@
 import os
+import click
+from flask.cli import with_appcontext
 from flask import (Flask, render_template)
 from flask_sqlalchemy import SQLAlchemy
 
@@ -9,7 +11,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='dev'
-        ,SQLALCHEMY_DATABASE_URI="sqlite:///"+os.path.join("databases", "test.db")
+        ,SQLALCHEMY_DATABASE_URI=f"sqlite:///{app.root_path}/databases/tarefas.db" #"sqlite:///"+os.path.join("databases", "test.db")
         ,SQLALCHEMY_TRACK_MODIFICATIONS=True
         ,ENV="production"
         ,DEBUG=True
@@ -30,7 +32,7 @@ def create_app(test_config=None):
 
     
     db.init_app(app)
-    # db.create_all()
+    app.cli.add_command(init_db_command)
 
     @app.route("/")
     @app.route("/index")
@@ -46,5 +48,19 @@ def create_app(test_config=None):
 
     return app
 
+def init_db():
+    db.drop_all()
+    db.create_all()
+    # db.reflect()
+
+
+@click.command("init-db")
+@with_appcontext
+def init_db_command():
+    """Clear existing data and create new tables."""
+    
+    init_db()
+    click.echo("Initialized the database.")
+   
 if __name__ == "__main__":
     create_app().run()
